@@ -42,6 +42,21 @@ class ViewController: UIViewController {
         annotation.subtitle = "This is my location"
         annotation.coordinate = location
         mapView.addAnnotation(annotation)
+        
+        // Add a long press gesture
+        let uilpgr = UILongPressGestureRecognizer(target: self, action: #selector(longPress))
+        mapView.addGestureRecognizer(uilpgr)
+    }
+    
+    @objc func longPress(gestureRecognizer : UIGestureRecognizer) {
+        let touchPoint = gestureRecognizer.location(in: mapView)
+        let coordinate = mapView.convert(touchPoint, toCoordinateFrom: mapView)
+       
+        // PIN Location: Add annotation
+        let annotation = MKPointAnnotation()
+        annotation.title = "Pinned Location"
+        annotation.coordinate = coordinate
+        mapView.addAnnotation(annotation)
     }
 }
 
